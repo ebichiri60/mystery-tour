@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYSTERY TOUR - AIコンシェルジュ!?</title>
+    <style>
+        /* ポップで可愛い背景（水玉模様） */
+        body {
+            background-color: #fff8e7;
+            background-image: radial-gradient(#ffdfba 20%, transparent 20%), radial-gradient(#ffdfba 20%, transparent 20%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            color: #333;
+            font-family: 'Hiragino Maru Gothic ProN', 'Zen Maru Gothic', 'Meiryo', sans-serif;
+            padding: 20px 10px;
+            text-align: center;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        /* 絵本・コミック風の太枠コンテナ */
+        .frame-outer {
+            background: #ffffff;
+            border: 4px solid #333;
+            border-radius: 20px;
+            box-shadow: 6px 6px 0px #ffb8b8;
+            padding: 20px 10px 30px 10px;
+        }
+        
+        h1 {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: #ff6b81;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px 0px #333;
+            letter-spacing: 0.1em;
+        }
+        .subtitle {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #747d8c;
+            margin-bottom: 10px;
+        }
+
+        /* 📦 中央テキストと散らかしアイテムのエリア */
+        .hero-area {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            margin: 10px 0 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 画像の共通設定（すべて85pxに統一） */
+        .scatter-item, .box-img {
+            position: absolute;
+            width: 85px;
+        }
+
+        /* 📦 段ボール箱（右上に配置・タップ可能） */
+        .box-img { 
+            top: 35px; 
+            right: 3%; 
+            transform: rotate(10deg); 
+            z-index: 20; 
+            -webkit-tap-highlight-color: transparent; 
+            cursor: pointer;
+        }
+
+        /* 🌟 周りのアイテム（静止） */
+        .item-camera { top: 10px; left: 50%; transform: translateX(-50%) rotate(5deg); z-index: 5; pointer-events: none;}
+        .item-map { top: 35px; left: 3%; transform: rotate(-15deg); z-index: 5; pointer-events: none;}
+        .item-bag { bottom: 15px; left: 12%; transform: rotate(-8deg); z-index: 15; pointer-events: none;}
+        .item-ticket { bottom: 20px; right: 12%; transform: rotate(12deg); z-index: 15; pointer-events: none;}
+
+        /* テキスト群（ど真ん中に配置） */
+        .text-group {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        /* 「準備中… / 準備完了！」のテキスト */
+        .status-text {
+            font-size: 2.2em;
+            font-weight: 900;
+            color: #ff4757;
+            text-shadow: 
+                2px 2px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                0px 3px 0 #fff, 0px -3px 0 #fff,
+                3px 0px 0 #fff, -3px 0px 0 #fff,
+                3px 3px 0px rgba(0,0,0,0.15);
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+
+        /* 「準備完了まで」のラベル */
+        .countdown-label-new {
+            font-size: 1em;
+            font-weight: 900;
+            color: #2f3542;
+            letter-spacing: 0.1em;
+            text-shadow: 
+                2px 2px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                0px 3px 0 #fff, 0px -3px 0 #fff,
+                3px 0px 0 #fff, -3px 0px 0 #fff,
+                3px 3px 0px rgba(0,0,0,0.1);
+        }
+
+        /* カウントダウンタイマー */
+        #countdown-timer {
+            font-size: 3.2em;
+            font-weight: 900;
+            font-family: monospace;
+            color: #2f3542;
+            letter-spacing: 0.05em;
+            text-shadow: 
+                2px 2px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                0px 3px 0 #fff, 0px -3px 0 #fff,
+                3px 0px 0 #fff, -3px 0px 0 #fff,
+                3px 3px 0px rgba(0,0,0,0.15);
+            line-height: 1.1;
+        }
+
+        /* 「…」の幅を固定 */
+        .dot-anim {
+            display: inline-block;
+            width: 1.2em;
+            text-align: left;
+        }
+
+        #typing-area, #ending-typing-area {
+            text-align: left;
+            min-height: 120px;
+            white-space: pre-wrap;
+            margin-bottom: 30px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #2f3542;
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+        
+        .hidden { display: none; }
+        
+        .content-block {
+            border-top: 3px dashed #dfe4ea;
+            padding: 20px 0;
+            text-align: left;
+        }
+        .content-block h3 {
+            font-size: 1.2em;
+            color: #fff;
+            background: #70a1ff;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px solid #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            transform: rotate(-2deg);
+        }
+
+        /* 🔗 お店・ホテル用リンクのスタイル */
+        .link-spot {
+            color: #ff4757;
+            text-decoration: underline;
+            font-weight: 900;
+            transition: opacity 0.2s;
+        }
+        .link-spot:active {
+            opacity: 0.5;
+        }
+        
+        /* ポップなボタン */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 3px solid #333;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.1s;
+            width: 80%;
+        }
+        .btn-pop {
+            background-color: #ff4757;
+            color: #fff;
+            box-shadow: 4px 4px 0px #333;
+        }
+        .btn-pop:not(:disabled):hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #333;
+        }
+        .btn:disabled {
+            background-color: #ced6e0;
+            color: #747d8c;
+            cursor: not-allowed;
+            box-shadow: none;
+            border-color: #a4b0be;
+        }
+        
+        /* 謎解きエリア */
+        .riddle-text {
+            background-color: #fff200;
+            color: #333;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #333;
+            font-size: 0.95em;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="frame-outer">
+        
+        <h1>MYSTERY TOUR</h1>
+        <div class="subtitle">〜 ドキドキ秘密の旅 〜</div>
+
+        <!-- 画面1: 準備中＆カウントダウン画面 -->
+        <div id="prep-screen">
+            
+            <div class="hero-area">
+                <img src="camera.png" alt="カメラ" class="scatter-item item-camera">
+                <img src="map.png" alt="地図" class="scatter-item item-map">
+                <img src="box.png" alt="段ボール箱" id="box-image" class="box-img">
+                <img src="carrybag.png" alt="キャリーバッグ" class="scatter-item item-bag">
+                <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
+
+                <div class="text-group">
+                    <div class="status-text" id="main-status-text">準備中<span class="dot-anim" id="dot-anim"></span></div>
+                    <div class="countdown-label-new">準備完了まで</div>
+                    <div id="countdown-timer">--:--:--</div>
+                </div>
+            </div>
+            
+            <button id="initiate-btn" class="btn btn-pop" disabled>システムを起動する！</button>
+        </div>
+
+        <!-- 画面2: メイン画面 (ボタン押下後) -->
+        <div id="main-screen" class="hidden">
+            <div id="typing-area"></div>
+            
+            <div id="main-content" class="hidden">
+                <div class="content-block">
+                    <div style="text-align: center;">
+                        <h3>今日の予定</h3>
+                    </div>
+                    <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
+                        <span style="font-size: 1.2em;">📍 20:50｜東京・上野着</span><br>
+                        まずはホテル（<a href="https://www.resol-ueno.com/" target="_blank" class="link-spot">ホテルレソル上野</a>：予約済み）にチェックインして身軽に！<br><br>
+
+                        <span style="font-size: 1.2em;">🍻 夜の宴の選択</span><br>
+                        <span style="color: #e15f41;">【A：<a href="https://tabelog.com/tokyo/A1311/A131101/13050186/" target="_blank" class="link-spot">東京豚バザール</a>】</span><br>
+                        極上の銘柄豚をこれでもかと味わい尽くす豚肉の楽園！とろけるような甘〜い脂身は、キンキンに冷えたビールと相性抜群デス。旅の初日のテンションを爆上げするならコチラ！<br>
+                        <span style="color: #e15f41;">【B：<a href="https://tabelog.com/tokyo/A1311/A131101/13210960/" target="_blank" class="link-spot">MEAT&WINE WINEHALL GLAMOUR 上野</a>】</span><br>
+                        ガッツリお肉とお酒をオシャレにキメる肉バル！豪快な肉盛りプレートを囲んで、なみなみ注がれたワインで乾杯。長旅の疲れを濃厚な旨味で吹き飛ばす、グラマラスな夜をお約束しマス！<br><br>
+
+                        <span style="font-size: 1.2em;">🍜 締めの選択</span><br>
+                        <span style="color: #e15f41;">【A：大行列に並んででも食べたい！絶品「<a href="https://tabelog.com/tokyo/A1311/A131101/13210392/" target="_blank" class="link-spot">らーめん 鴨to葱</a>」】</span><br>
+                        上野エリアで常に長蛇の列を作る超名店！鴨と水だけで炊き出した琥珀色のスープに、香り高いネギの甘みが溶け込む至福の一杯……。並ぶ価値アリの美しすぎるラーメンで、最高のシメを！<br>
+                        <span style="color: #e15f41;">【B：行列はちょっと…他のラーメンなんかある？】</span><br>
+                        「美味しいものは食べたいけど、今は並ぶ体力がない！」というお二人のために、ワタシの美食データベースが別ルートを検索しマス。その時の気分に合わせて、サクッと入れる近場の名店をご案内する、ワタシの腕の見せ所デス！
+                    </p>
+                </div>
+                
+                <div class="content-block" style="text-align: center;">
+                    <h3>LINE連携</h3>
+                    <p style="font-size: 0.9em; font-weight: bold;">
+                        今後のサポートのため、下のボタンから<br>私（ポンコツ）を友達追加してください！
+                    </p>
+                    <!-- ↓↓ LINEのURLに書き換えてください ↓↓ -->
+                    <a href="https://lin.ee/YOUR_LINK" class="btn btn-pop" style="background-color: #06C755;">LINE登録する！</a>
+                </div>
+                
+                <div class="content-block">
+                    <div style="text-align: center;">
+                        <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
+                    </div>
+                    <div class="riddle-text">
+                        細くて長くて、すすると美味しい汁物はなーんだ？<br><br>
+                        <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 画面3: エンディング画面 (5回タップ後) -->
+        <div id="ending-screen" class="hidden">
+            <img src="quokka.png" alt="クワッカワラビー" class="box-img" style="position: static; margin-bottom: 20px; cursor: default; transform: none; width: 150px;">
+            <div id="ending-typing-area"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const BOX_IMAGE_SRC = 'box.png';
+    const QUOKKA_IMAGE_SRC = 'quokka.png';
+    
+    // 【目標時刻の設定】 2026年7月17日 19時00分00秒
+    const TARGET_DATE = new Date('2026-07-17T19:00:00');
+
+    document.getElementById('box-image').src = BOX_IMAGE_SRC;
+    let tapCount = 0;
+    let timerInterval;
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = TARGET_DATE - now;
+        const timerDisplay = document.getElementById('countdown-timer');
+        const initiateBtn = document.getElementById('initiate-btn');
+        const dotAnimDisplay = document.getElementById('dot-anim');
+        const mainStatusText = document.getElementById('main-status-text');
+
+        if (diff <= 0) {
+            timerDisplay.innerText = "00:00:00";
+            mainStatusText.innerHTML = "準備完了！";
+            initiateBtn.disabled = false;
+            initiateBtn.innerText = "システムを起動する！";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        const fH = String(hours).padStart(2, '0');
+        const fM = String(minutes).padStart(2, '0');
+        const fS = String(seconds).padStart(2, '0');
+        timerDisplay.innerText = `${fH}:${fM}:${fS}`;
+
+        if(dotAnimDisplay) {
+            const dotStates = ["", ".", "..", "..."];
+            dotAnimDisplay.innerText = dotStates[(60 - seconds) % 4];
+        }
+    }
+
+    window.onload = () => {
+        updateCountdown();
+        timerInterval = setInterval(updateCountdown, 1000);
+    };
+
+    function typeText(elementId, text, speed, callback) {
+        const el = document.getElementById(elementId);
+        el.innerHTML = '';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                let char = text.charAt(i);
+                el.innerHTML += (char === '\n') ? '<br>' : char;
+                i++;
+                setTimeout(type, speed);
+            } else {
+                if (callback) callback();
+            }
+        }
+        type();
+    }
+
+    document.getElementById('initiate-btn').addEventListener('click', () => {
+        document.getElementById('prep-screen').classList.add('hidden');
+        document.getElementById('main-screen').classList.remove('hidden');
+        
+        const introText = `ハァハァ………フゥフゥ………間に合った……やべっ…えーコホン！ザー……ピピピッ……システム起動、完了。
+現在位置……草津を出発した新幹線車内。ターゲット2名、無事に指定列車への着席を捕捉しました。
+…………………………
+​
+……まずは、突然の怪しい『招待状』であったにも関わらず、お時間通りに列車にご乗車いただき、本当にありがとうございます。そして、この特別なシークレット・ツアーへようこそ！
+​
+ワタシハ、先ほどお渡しした手紙に記されていた『専属コンシェルジュ』兼『美食データ収集システム』、型番・段ボール箱デス。
+​
+（少し焦ったような、情けない声で）
+……ピー、ガガッ。警告、警告。
+先ほどから、お二人の視線が手元の『乗車券』に釘付けになっているのを検知しました。
+​
+……ハイ、お察しの通りデス。ワタシとしたことが、お渡しした切符の券面に、最終目的地である『函館』の文字がバッチリ印字されているという痛恨のミスを起こしてしまいました……。
+ミステリーツアーなのに、開始0秒で壮大にネタバレしてしまうという信じられないポンコツぶりですが……。どうか薄目で切符を見て、知らないフリをしてワクワクしてくださると助かりマス……！
+​
+（コホンと咳払いをして、元の機械的な声に戻る）
+……さて、気を取り直して。ワタシとスマートフォンとの同期が完了し、本格的なミッションがスタートしました。
+今回の壮大なる旅の最終目的地は、遥か北の大地、函……（ピーッ）ゲフン。
+そのために、道中さまざまな場所で極上のお酒と美食を堪能していただき、皆様の『美味しい記憶』をワタシのデータ庫へ提供していただきます。
+​
+記念すべき最初の目的地は……『上野』デス！
+本日のミッションは、上野の熱気と冷たいアルコール、そして締めの一杯のデータを極秘裏に収集すること。
+​
+ですが、まずは肩の力を抜いてください。
+上野に到着するまでは、完全なる自由行動。日常のスイッチをオフにして、さっそく冷たいビールを開けて乾杯するのも大歓迎デス！到着後の居酒屋のデータもバッチリ検索済みですので、これから始まる1ヶ月の長期連休の前夜祭と思って、道中ビールを楽しんだり、会話をお楽しみいただき、心ゆくまでくつろいでくださいね。
+​
+画面の下には、移動中の暇つぶし用として、ワタシからの『謎解きプログラム』を格納しておきました。答えは招待状に同封した解答用紙に記入しておいてください。夜にでも確認しますので、忘れないようにお願いします。
+そしてもう一つ。夜の美食データをスムーズに受信するため、画面下にあるボタンから、ワタシの『専用通信回線（LINE）』をシステム登録（友達追加）しておいてください。
+​
+すべての行程は、到着するその瞬間まで（行き先以外は）秘密デス。
+それでは、驚きと笑顔に満ちた、素晴らしいツアーの幕開けデス。上野の地でお待ちしております。……ザー……ピピッ……通信、終了。`;
+        
+        typeText('typing-area', introText, 35, () => {
+            document.getElementById('main-content').classList.remove('hidden');
+        });
+    });
+
+    document.getElementById('box-image').addEventListener('click', () => {
+        tapCount++;
+        if (tapCount >= 5) {
+            clearInterval(timerInterval);
+            document.getElementById('prep-screen').classList.add('hidden');
+            document.getElementById('ending-screen').classList.remove('hidden');
+            document.querySelector('#ending-screen img').src = QUOKKA_IMAGE_SRC;
+
+            const endingText = "パカッ……。\n\n中から、クワッカワラビーが顔を出しました。\n\n…………………………………………\n\n……実はネ。\nワタシがポンコツなコンシェルジュを演じ、謎を仕掛け、行き先を隠し、胃袋を空っぽにさせたりしたのは——全部、「二人きりでしか作れない時間」を届けるためデス。\n\n招待状も、新幹線も、盛岡も青森も、最後の謎も。\n誰かに言われたから動く旅ではなく、「お二人が自分で選んで、歩いて、笑って、少しだけ迷って」いく旅に、したかったンデス。\n\nだから箱を開けるキーは、最後までワタシの手では渡しマセンでした。\nDay5の謎を解き、「ここに戻って、箱を五回押せ」と書いてあるところまでたどり着いた……それが、ワタシからの本当の卒業証書デス。\n\nどうも、ありがとう。\n間に合ってくれて、乗ってくれて、食べてくれて、解けてくれて、最後まで付いてきてくれて——本当に、ありがとう。\nワタシのデータ庫は、もういっぱいでス。……幸せな意味で、です。\n\nここからの時間は、予定表も謎もいりマセン。\n残った日々は、二人だけの地図で歩いてください。\nワタシはもう、後ろから見守るだけデス。\n\n素敵な旅の続きを。\n……いってらっしゃい。\n\nザー……ピピッ……。\nポンコツコンシェルジュ、任務完了。通信、本当に……終了。";
+            
+            setTimeout(() => {
+                typeText('ending-typing-area', endingText, 90);
+            }, 600);
+        }
+    });
+</script>
+</body>
+</html>

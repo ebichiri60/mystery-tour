@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYSTERY TOUR - DAY 4 青森フリー</title>
+    <style>
+        /* ポップで可愛い背景（水玉模様） */
+        body {
+            background-color: #fff8e7;
+            background-image: radial-gradient(#ffdfba 20%, transparent 20%), radial-gradient(#ffdfba 20%, transparent 20%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            color: #333;
+            font-family: 'Hiragino Maru Gothic ProN', 'Zen Maru Gothic', 'Meiryo', sans-serif;
+            padding: 20px 10px;
+            text-align: center;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        /* 絵本・コミック風の太枠コンテナ */
+        .frame-outer {
+            background: #ffffff;
+            border: 4px solid #333;
+            border-radius: 20px;
+            box-shadow: 6px 6px 0px #ffb8b8;
+            padding: 20px 10px 30px 10px;
+        }
+        
+        h1 {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: #ff6b81;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px 0px #333;
+            letter-spacing: 0.1em;
+        }
+        .subtitle {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #747d8c;
+            margin-bottom: 10px;
+        }
+
+        /* 📦 中央テキストと散らかしアイテムのエリア */
+        .hero-area {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            margin: 10px 0 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 画像の共通設定（すべて85pxに統一） */
+        .scatter-item, .box-img {
+            position: absolute;
+            width: 85px;
+        }
+
+        /* 📦 段ボール箱（右上に配置） */
+        .box-img { 
+            top: 35px; 
+            right: 3%; 
+            transform: rotate(10deg); 
+            z-index: 20; 
+            -webkit-tap-highlight-color: transparent; 
+            cursor: default;
+            pointer-events: none;
+        }
+
+        /* 🌟 周りのアイテム（静止） */
+        .item-camera { top: 10px; left: 50%; transform: translateX(-50%) rotate(5deg); z-index: 5; pointer-events: none;}
+        .item-map { top: 35px; left: 3%; transform: rotate(-15deg); z-index: 5; pointer-events: none;}
+        .item-bag { bottom: 15px; left: 12%; transform: rotate(-8deg); z-index: 15; pointer-events: none;}
+        .item-ticket { bottom: 20px; right: 12%; transform: rotate(12deg); z-index: 15; pointer-events: none;}
+
+        /* テキスト群（ど真ん中に配置） */
+        .text-group {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        /* 「準備中… / 準備完了！」のテキスト */
+        .status-text {
+            font-size: 2.2em;
+            font-weight: 900;
+            color: #ff4757;
+            text-shadow: 
+                2px 2px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                0px 3px 0 #fff, 0px -3px 0 #fff,
+                3px 0px 0 #fff, -3px 0px 0 #fff,
+                3px 3px 0px rgba(0,0,0,0.15);
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+
+        /* 「準備完了まで」のラベル */
+        .countdown-label-new {
+            font-size: 1em;
+            font-weight: 900;
+            color: #2f3542;
+            letter-spacing: 0.1em;
+            text-shadow: 
+                2px 2px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                0px 3px 0 #fff, 0px -3px 0 #fff,
+                3px 0px 0 #fff, -3px 0px 0 #fff,
+                3px 3px 0px rgba(0,0,0,0.1);
+        }
+
+        /* カウントダウンタイマー */
+        #countdown-timer {
+            font-size: 3.2em;
+            font-weight: 900;
+            font-family: monospace;
+            color: #2f3542;
+            letter-spacing: 0.05em;
+            text-shadow: 
+                2px 2px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                0px 3px 0 #fff, 0px -3px 0 #fff,
+                3px 0px 0 #fff, -3px 0px 0 #fff,
+                3px 3px 0px rgba(0,0,0,0.15);
+            line-height: 1.1;
+        }
+
+        /* 「…」の幅を固定 */
+        .dot-anim {
+            display: inline-block;
+            width: 1.2em;
+            text-align: left;
+        }
+
+        #typing-area, #ending-typing-area {
+            text-align: left;
+            min-height: 120px;
+            white-space: pre-wrap;
+            margin-bottom: 30px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #2f3542;
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+        
+        .hidden { display: none; }
+        
+        .content-block {
+            border-top: 3px dashed #dfe4ea;
+            padding: 20px 0;
+            text-align: left;
+        }
+        .content-block h3 {
+            font-size: 1.2em;
+            color: #fff;
+            background: #70a1ff;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px solid #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            transform: rotate(-2deg);
+        }
+
+        /* 🔗 お店・ホテル用リンクのスタイル */
+        .link-spot {
+            color: #ff4757;
+            text-decoration: underline;
+            font-weight: 900;
+            transition: opacity 0.2s;
+        }
+        .link-spot:active {
+            opacity: 0.5;
+        }
+        
+        /* ポップなボタン */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 3px solid #333;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.1s;
+            width: 80%;
+        }
+        .btn-pop {
+            background-color: #ff4757;
+            color: #fff;
+            box-shadow: 4px 4px 0px #333;
+        }
+        .btn-pop:not(:disabled):hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #333;
+        }
+        .btn:disabled {
+            background-color: #ced6e0;
+            color: #747d8c;
+            cursor: not-allowed;
+            box-shadow: none;
+            border-color: #a4b0be;
+        }
+        
+        /* 謎解きエリア */
+        .riddle-text {
+            background-color: #fff200;
+            color: #333;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #333;
+            font-size: 0.95em;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="frame-outer">
+        
+        <h1>MYSTERY TOUR</h1>
+        <div class="subtitle">〜 ドキドキ秘密の旅 〜</div>
+
+        <div class="hero-area">
+            <img src="camera.png" alt="カメラ" class="scatter-item item-camera">
+            <img src="map.png" alt="地図" class="scatter-item item-map">
+            <img src="box.png" alt="段ボール箱" class="box-img">
+            <img src="carrybag.png" alt="キャリーバッグ" class="scatter-item item-bag">
+            <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
+
+            <div class="text-group">
+                <div class="status-text">DAY 4</div>
+                <div class="countdown-label-new">青森フリー</div>
+            </div>
+        </div>
+
+        <div id="typing-area"></div>
+        
+        <div id="main-content" class="hidden">
+            <div class="content-block">
+                <div style="text-align: center;">
+                    <h3>今日の予定</h3>
+                </div>
+                <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
+                    <span style="font-size: 1.2em;">🆓 本日は完全自由行動デス！</span><br>
+                    時間割なし。強制イベントなし。お二人の気分が最上のナビゲート機能デス。<br><br>
+
+                    <span style="font-size: 1.2em;">🗺️ 観光</span><br>
+                    行きたい場所、行きたいタイミングでOK。散歩でも、遠出でも、昼寝でも……ワタシは応援シマス。<br><br>
+
+                    <span style="font-size: 1.2em;">🍽 食事</span><br>
+                    食べたいものを、食べたいときに。青森のご当地フードも、お気に入りリピートも大歓迎デス。<br><br>
+
+                    <span style="font-size: 1.2em;">🎁 お土産探し</span><br>
+                    連泊なので荷造りゼロ！手ぶらで街を歩き、気まぐれにお土産ハントも楽しいヨ。<br><br>
+
+                    <span style="color: #e15f41;">※無理な移動計画は不要。今日は「何もしない」も立派な予定にカウントしマス。</span>
+                </p>
+            </div>
+            
+            <div class="content-block">
+                <div style="text-align: center;">
+                    <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
+                </div>
+                <div class="riddle-text">
+                    【ころころ青森クイズ】<br><br>
+                    「りん」と「ご」をくっつけると、<br>
+                    赤くて甘くて、青森の顔役になるヨ。<br><br>
+                    木から落ちても割れにくく、<br>
+                    ジュースにもパイにも変身するソレ。<br>
+                    答えはひらがなでどうぞ！<br><br>
+                    <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function typeText(elementId, text, speed, callback) {
+        const el = document.getElementById(elementId);
+        el.innerHTML = '';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                let char = text.charAt(i);
+                el.innerHTML += (char === '\n') ? '<br>' : char;
+                i++;
+                setTimeout(type, speed);
+            } else {
+                if (callback) callback();
+            }
+        }
+        type();
+    }
+
+    window.onload = () => {
+        const introText = `ザー……ピピピッ……おはよう通信、接続。
+現在時刻……朝。ターゲット2名の起動を観測……シマシタ！（寝坊センサーはOFFにしてありマス）
+
+本日担当、ポンコツコンシェルジュ型番・段ボール箱デス。
+えーコホン。今日の予定表を開くと……あれ？空白が多い……ハッ！仕様デス。
+
+本日は『完全フリーな1日』！
+ワタシからの強制ミッションは、ほぼゼロ。好きな場所へ、好きなペースで、好きな順番に動いてくださイ。
+観光でも、ゆるいカフェ巡りでも、本気のお土産探しでも、ホテルでのぐうたらでも……すべて正規ルートデス。
+
+そして朗報。今日は連泊なので荷造り不要！
+朝からキャリーバッグと格闘する必要なし。手ぶらで街へ飛び出して、気分が乗ったら戻ってくる——それが最強の作戦デス。
+
+もちろん美食センサーは稼働中デスガ……今日は「食べなきゃ」より「食べたい」で選んでOK。
+胃袋も心も、ゆったりモード推奨シマス。
+
+暇つぶしの謎は下に入れてあるヨ。暇になったら解いてネ。
+
+それでは、青森フリーデイ、スタート！今日はお二人の運転で……ザー……ピピッ……通信、ゆるく継続中。`;
+
+        typeText('typing-area', introText, 35, () => {
+            document.getElementById('main-content').classList.remove('hidden');
+        });
+    };
+</script>
+</body>
+</html>
