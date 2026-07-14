@@ -76,7 +76,7 @@
         /* 🌟 周りのアイテム（静止） */
         .item-camera { top: 10px; left: 50%; transform: translateX(-50%) rotate(5deg); z-index: 5; pointer-events: none;}
         .item-map { top: 35px; left: 3%; transform: rotate(-15deg); z-index: 5; pointer-events: none;}
-        .item-bag { bottom: 15px; left: 12%; transform: rotate(-8deg); z-index: 15; pointer-events: none;}
+        .item-bag { bottom: 15px; left: 12%; transform: rotate(-8deg); z-index: 25; pointer-events: auto; cursor: pointer; -webkit-tap-highlight-color: transparent;}
         .item-ticket { bottom: 20px; right: 12%; transform: rotate(12deg); z-index: 15; pointer-events: none;}
 
         /* テキスト群（ど真ん中に配置） */
@@ -231,6 +231,65 @@
             font-size: 0.95em;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
         }
+        .riddle-img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        .riddle-note {
+            font-size: 0.85em;
+            color: #555;
+            font-weight: bold;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        /* たぬきが画面下からひょこひょこ顔出し */
+        .tanuki-peek {
+            position: fixed;
+            bottom: 0;
+            right: 8%;
+            z-index: 100;
+            width: 110px;
+            height: 95px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .tanuki-peek img {
+            display: block;
+            width: 110px;
+            height: auto;
+            animation: tanuki-bob 2.8s ease-in-out infinite;
+            transform: translateY(78%);
+        }
+        @keyframes tanuki-bob {
+            0%, 100% {
+                transform: translateY(78%);
+            }
+            18% {
+                transform: translateY(22%);
+            }
+            28% {
+                transform: translateY(30%);
+            }
+            40% {
+                transform: translateY(18%);
+            }
+            52% {
+                transform: translateY(28%);
+            }
+            65%, 78% {
+                transform: translateY(22%);
+            }
+            90% {
+                transform: translateY(78%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -248,7 +307,7 @@
                 <img src="camera.png" alt="カメラ" class="scatter-item item-camera">
                 <img src="map.png" alt="地図" class="scatter-item item-map">
                 <img src="box.png" alt="段ボール箱" id="box-image" class="box-img">
-                <img src="carrybag.png" alt="キャリーバッグ" class="scatter-item item-bag">
+                <img src="carrybag.png" alt="キャリーバッグ" id="carrybag-image" class="scatter-item item-bag">
                 <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
 
                 <div class="text-group">
@@ -275,13 +334,13 @@
                         まずはホテル（<a href="https://www.resol-ueno.com/" target="_blank" class="link-spot">ホテルレソル上野</a>：予約済み）にチェックインして身軽に！<br><br>
 
                         <span style="font-size: 1.2em;">🍻 夜の宴の選択</span><br>
-                        <span style="color: #e15f41;">【A：<a href="https://tabelog.com/tokyo/A1311/A131101/13050186/" target="_blank" class="link-spot">東京豚バザール</a>】</span><br>
+                        <span style="color: #e15f41;">【A：<a href="https://s.tabelog.com/tokyo/A1311/A131101/13016837/" target="_blank" class="link-spot">東京豚バザール</a>】</span><br>
                         極上の銘柄豚をこれでもかと味わい尽くす豚肉の楽園！とろけるような甘〜い脂身は、キンキンに冷えたビールと相性抜群デス。旅の初日のテンションを爆上げするならコチラ！<br>
-                        <span style="color: #e15f41;">【B：<a href="https://tabelog.com/tokyo/A1311/A131101/13210960/" target="_blank" class="link-spot">MEAT&WINE WINEHALL GLAMOUR 上野</a>】</span><br>
+                        <span style="color: #e15f41;">【B：<a href="https://s.tabelog.com/tokyo/A1311/A131101/13219810/" target="_blank" class="link-spot">MEAT&WINE WINEHALL GLAMOUR 上野</a>】</span><br>
                         ガッツリお肉とお酒をオシャレにキメる肉バル！豪快な肉盛りプレートを囲んで、なみなみ注がれたワインで乾杯。長旅の疲れを濃厚な旨味で吹き飛ばす、グラマラスな夜をお約束しマス！<br><br>
 
                         <span style="font-size: 1.2em;">🍜 締めの選択</span><br>
-                        <span style="color: #e15f41;">【A：大行列に並んででも食べたい！絶品「<a href="https://tabelog.com/tokyo/A1311/A131101/13210392/" target="_blank" class="link-spot">らーめん 鴨to葱</a>」】</span><br>
+                        <span style="color: #e15f41;">【A：大行列に並んででも食べたい！絶品「<a href="https://s.tabelog.com/tokyo/A1311/A131101/13210392/" target="_blank" class="link-spot">らーめん 鴨to葱</a>」】</span><br>
                         上野エリアで常に長蛇の列を作る超名店！鴨と水だけで炊き出した琥珀色のスープに、香り高いネギの甘みが溶け込む至福の一杯……。並ぶ価値アリの美しすぎるラーメンで、最高のシメを！<br>
                         <span style="color: #e15f41;">【B：行列はちょっと…他のラーメンなんかある？】</span><br>
                         「美味しいものは食べたいけど、今は並ぶ体力がない！」というお二人のために、ワタシの美食データベースが別ルートを検索しマス。その時の気分に合わせて、サクッと入れる近場の名店をご案内する、ワタシの腕の見せ所デス！
@@ -301,10 +360,8 @@
                     <div style="text-align: center;">
                         <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
                     </div>
-                    <div class="riddle-text">
-                        細くて長くて、すすると美味しい汁物はなーんだ？<br><br>
-                        <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
-                    </div>
+                    <img src="day1_nazo.png" alt="暇つぶしの謎" class="riddle-img">
+                    <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
                 </div>
             </div>
         </div>
@@ -318,6 +375,11 @@
     </div>
 </div>
 
+<!-- 画面下からたぬきがひょこひょこ顔出し -->
+<div class="tanuki-peek hidden" aria-hidden="true">
+    <img src="tanuki.png" alt="">
+</div>
+
 <script>
     const BOX_IMAGE_SRC = 'box.png';
     const QUOKKA_IMAGE_SRC = 'quokka.png';
@@ -327,7 +389,9 @@
 
     document.getElementById('box-image').src = BOX_IMAGE_SRC;
     let tapCount = 0;
+    let bagTapCount = 0;
     let timerInterval;
+    let mainStarted = false;
 
     function updateCountdown() {
         const now = new Date();
@@ -383,9 +447,14 @@
         type();
     }
 
-    document.getElementById('initiate-btn').addEventListener('click', () => {
+    function startMainScreen() {
+        if (mainStarted) return;
+        mainStarted = true;
+        clearInterval(timerInterval);
+
         document.getElementById('prep-screen').classList.add('hidden');
         document.getElementById('main-screen').classList.remove('hidden');
+        document.querySelector('.tanuki-peek').classList.remove('hidden');
         
         const introText = `ハァハァ………フゥフゥ………間に合った……やべっ…えーコホン！ザー……ピピピッ……システム起動、完了。
 現在位置……草津を出発した新幹線車内。ターゲット2名、無事に指定列車への着席を捕捉しました。
@@ -422,6 +491,16 @@
         typeText('typing-area', introText, 35, () => {
             document.getElementById('main-content').classList.remove('hidden');
         });
+    }
+
+    document.getElementById('initiate-btn').addEventListener('click', startMainScreen);
+
+    // デバッグ用: キャリーバッグを10回タップでメイン画面へ
+    document.getElementById('carrybag-image').addEventListener('click', () => {
+        bagTapCount++;
+        if (bagTapCount >= 10) {
+            startMainScreen();
+        }
     });
 
     document.getElementById('box-image').addEventListener('click', () => {
