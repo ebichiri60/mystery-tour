@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYSTERY TOUR - DAY 4 青森フリー</title>
+    <title>MYSTERY TOUR - DAY 3 青森フリー</title>
     <style>
         /* ポップで可愛い背景（水玉模様） */
         body {
@@ -232,6 +232,42 @@
             font-size: 0.95em;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
         }
+        .riddle-img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        .riddle-note {
+            font-size: 0.85em;
+            color: #555;
+            font-weight: bold;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .nazo-box {
+            display: block;
+            width: 160px;
+            height: auto;
+            margin: 20px auto 0;
+        }
+        .day-box-intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .day-box-intro img {
+            width: 180px;
+            height: auto;
+            animation: day-box-pop 0.45s ease-out;
+        }
+        @keyframes day-box-pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -250,30 +286,49 @@
             <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
 
             <div class="text-group">
-                <div class="status-text">DAY 4</div>
+                <div class="status-text">DAY 3</div>
                 <div class="countdown-label-new">青森フリー</div>
             </div>
         </div>
 
-        <div id="typing-area"></div>
+        <div id="day-box-intro" class="day-box-intro">
+            <img src="day4_box.png" alt="段ボール箱">
+        </div>
+        <div id="typing-area" class="hidden"></div>
         
         <div id="main-content" class="hidden">
             <div class="content-block">
                 <div style="text-align: center;">
-                    <h3>今日の予定</h3>
+                    <h3>今日の候補リスト</h3>
                 </div>
                 <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
                     <span style="font-size: 1.2em;">🆓 本日は完全自由行動デス！</span><br>
-                    時間割なし。強制イベントなし。お二人の気分が最上のナビゲート機能デス。<br><br>
+                    お好きな時間に起きて、お好きな場所へ。以下のリストはあくまでワタシからの「おすすめ」デス。パズルのように組み合わせて楽しんでくだサイ！<br><br>
 
-                    <span style="font-size: 1.2em;">🗺️ 観光</span><br>
-                    行きたい場所、行きたいタイミングでOK。散歩でも、遠出でも、昼寝でも……ワタシは応援シマス。<br><br>
+                    <span style="font-size: 1.2em;">🐟 朝〜ブランチ：至福の目覚め</span><br>
+                    <span style="color: #e15f41;">【<a href="https://nokkedon.jp/" target="_blank" class="link-spot">青森魚菜センター（のっけ丼）</a>＆ 朝ビール🍻】</span><br>
+                    市場を巡って、好きな具材をご飯に「のっけ」る究極のわがまま丼！新鮮なウニやイクラを乗せた自分だけの海鮮丼と一緒に、朝から冷た〜いビールで乾杯！お休みの日の特権、最高の贅沢デスネ！<br><br>
 
-                    <span style="font-size: 1.2em;">🍽 食事</span><br>
-                    食べたいものを、食べたいときに。青森のご当地フードも、お気に入りリピートも大歓迎デス。<br><br>
+                    <span style="font-size: 1.2em;">📸 観光スポット：青森を大満喫</span><br>
+                    <span style="color: #e15f41;">【<a href="https://www.aomori-museum.jp/" target="_blank" class="link-spot">青森県立美術館</a>】</span><br>
+                    真っ白な巨大犬「あおもり犬」と一緒にパシャリ📸！ゆったりとしたアートな空間で、心静かな時間を過ごすのも素敵デス。<br>
+                    <span style="color: #e15f41;">【<a href="http://www.nebuta.jp/warasse/" target="_blank" class="link-spot">ねぶたの家 わ・らっせ</a>】</span><br>
+                    大迫力のねぶたがズラリ！青森のお祭りの熱気と歴史を肌で体感できる大人気スポットデス。<br>
+                    <span style="color: #e15f41;">【<a href="https://jre-abc.com/wp/afactory/" target="_blank" class="link-spot">A-FACTORY（エーファクトリー）</a>】</span><br>
+                    ベイエリアにあるオシャレな施設！青森りんごを使った絶品シードル（お酒）や、可愛いお土産がたくさん揃っていマス！<br><br>
 
-                    <span style="font-size: 1.2em;">🎁 お土産探し</span><br>
-                    連泊なので荷造りゼロ！手ぶらで街を歩き、気まぐれにお土産ハントも楽しいヨ。<br><br>
+                    <span style="font-size: 1.2em;">🍜 ランチ・軽食：青森ソウルフード</span><br>
+                    <span style="color: #e15f41;">【味噌カレー牛乳ラーメン】</span><br>
+                    名前のインパクト大！だけど、味噌のコク、カレーの刺激、牛乳のまろやかさ、バターの風味が奇跡のハーモニーを奏でる、青森県民熱愛の一杯デス。<br>
+                    <span style="color: #e15f41;">【津軽ラーメン（煮干し系）】</span><br>
+                    ガツンと効いた煮干し出汁が五臓六腑に染み渡りマス。朝ラーやランチにぴったり！<br><br>
+
+                    <span style="font-size: 1.2em;">🍻 夜の宴：青森の夜に乾杯！</span><br>
+                    ※昨日行かなかったお店に突撃するのもヨシ！<br>
+                    <span style="color: #e15f41;">【<a href="https://s.tabelog.com/aomori/A0201/A020101/2000359/" target="_blank" class="link-spot">肴ダイニング 心</a>】</span><br>
+                    洗練された和の空間で、陸奥湾の新鮮な海の幸や青森の郷土料理を地酒と一緒にしっぽりと！<br>
+                    <span style="color: #e15f41;">【<a href="https://tabelog.com/aomori/A0201/A020101/2006625/" target="_blank" class="link-spot">石と肴 地雷也（じらいや）</a>】</span><br>
+                    巨大なホタテや、炭火で焼かれたアツアツの魚介！活気あふれる店内で豪快に飲みたいならココ！<br><br>
 
                     <span style="color: #e15f41;">※無理な移動計画は不要。今日は「何もしない」も立派な予定にカウントしマス。</span>
                 </p>
@@ -283,15 +338,9 @@
                 <div style="text-align: center;">
                     <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
                 </div>
-                <div class="riddle-text">
-                    【ころころ青森クイズ】<br><br>
-                    「りん」と「ご」をくっつけると、<br>
-                    赤くて甘くて、青森の顔役になるヨ。<br><br>
-                    木から落ちても割れにくく、<br>
-                    ジュースにもパイにも変身するソレ。<br>
-                    答えはひらがなでどうぞ！<br><br>
-                    <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
-                </div>
+                <img src="day4_nazo.png" alt="暇つぶしの謎" class="riddle-img">
+                <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
+                <img src="nazo_box.png" alt="" class="nazo-box">
             </div>
         </div>
 
@@ -317,29 +366,32 @@
     }
 
     window.onload = () => {
-        const introText = `ザー……ピピピッ……おはよう通信、接続。
-現在時刻……朝。ターゲット2名の起動を観測……シマシタ！（寝坊センサーはOFFにしてありマス）
+        const introText = `
+ザー……ピピピッ……おはよう通信、接続。
+現在時刻……朝。ターゲット2名の起動を観測……シマシタ！（もちろん、寝坊アラームはOFFに設定済みデス）
 
-本日担当、ポンコツコンシェルジュ型番・段ボール箱デス。
-えーコホン。今日の予定表を開くと……あれ？空白が多い……ハッ！仕様デス。
+本日もナビゲーションを担当いたしマス、ポンコツコンシェルジュ型番・段ボール箱デス。
+えーコホン。本日のスケジュールデータを読み込み中……あれ？……エラー？データがスッカスカ……ハッ！仕様デス。
 
-本日は『完全フリーな1日』！
-ワタシからの強制ミッションは、ほぼゼロ。好きな場所へ、好きなペースで、好きな順番に動いてくださイ。
-観光でも、ゆるいカフェ巡りでも、本気のお土産探しでも、ホテルでのぐうたらでも……すべて正規ルートデス。
+本日は、お二人のための『完全フリーな1日』！
+ワタシからの強制ミッションはゼロ。好きな場所へ、好きなペースで、好きな順番に動いてくだサイ。
+ガッツリ観光でも、ゆるいカフェ巡りでも、ホテルのベッドで二度寝でも……すべてが『大正解のルート』デス。
 
-そして朗報。今日は連泊なので荷造り不要！
-朝からキャリーバッグと格闘する必要なし。手ぶらで街へ飛び出して、気分が乗ったら戻ってくる——それが最強の作戦デス。
+さらに嬉しいお知らせデス。今日は連泊なので、重たいキャリーバッグとの格闘は不要！
+身軽な姿で街へ飛び出して、自由な風を感じてくだサイ。（ワタシもキャリーバッグに入らなくていいからラクチン……ガガッ！AIは疲れません！）
 
-もちろん美食センサーは稼働中デスガ……今日は「食べなきゃ」より「食べたい」で選んでOK。
-胃袋も心も、ゆったりモード推奨シマス。
+とはいえ、「完全にノープランだと迷っちゃう！」というお二人のために、ワタシの美食＆観光データベースから『おすすめの候補地リスト』を下の方にズラリと抽出しておきマシタ。
+その時の気分と、お腹の空き具合と相談して、好きなようにつまみ食いしてくだサイネ。
 
-暇つぶしの謎は下に入れてあるヨ。暇になったら解いてネ。
+本日分の謎解きプログラムも下に格納済みデス。
+それでは、ゆったり気ままな青森フリーデイ、スタート！お二人だけのペースで……ザー……ピピッ……通信、ゆるーく継続中。`;
 
-それでは、青森フリーデイ、スタート！今日はお二人の運転で……ザー……ピピッ……通信、ゆるく継続中。`;
-
-        typeText('typing-area', introText, 35, () => {
-            document.getElementById('main-content').classList.remove('hidden');
-        });
+        setTimeout(() => {
+            document.getElementById('typing-area').classList.remove('hidden');
+            typeText('typing-area', introText, 35, () => {
+                document.getElementById('main-content').classList.remove('hidden');
+            });
+        }, 1500);
     };
 </script>
 </body>

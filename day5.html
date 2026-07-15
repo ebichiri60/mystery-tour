@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYSTERY TOUR - DAY 5 最終日</title>
+    <title>MYSTERY TOUR - DAY 4 最終日</title>
     <style>
         /* ポップで可愛い背景（水玉模様） */
         body {
@@ -232,6 +232,42 @@
             font-size: 0.95em;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
         }
+        .riddle-img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        .riddle-note {
+            font-size: 0.85em;
+            color: #555;
+            font-weight: bold;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .nazo-box {
+            display: block;
+            width: 160px;
+            height: auto;
+            margin: 20px auto 0;
+        }
+        .day-box-intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .day-box-intro img {
+            width: 180px;
+            height: auto;
+            animation: day-box-pop 0.45s ease-out;
+        }
+        @keyframes day-box-pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -250,12 +286,15 @@
             <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
 
             <div class="text-group">
-                <div class="status-text">DAY 5</div>
+                <div class="status-text">DAY 4</div>
                 <div class="countdown-label-new">最終ミッション</div>
             </div>
         </div>
 
-        <div id="typing-area"></div>
+        <div id="day-box-intro" class="day-box-intro">
+            <img src="day5_box.png" alt="段ボール箱">
+        </div>
+        <div id="typing-area" class="hidden"></div>
         
         <div id="main-content" class="hidden">
             <div class="content-block">
@@ -263,25 +302,19 @@
                     <h3>今日の予定</h3>
                 </div>
                 <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333; text-align: center;">
-                    本日は謎のみ表示シマス。
+                    本日は「謎」のみ表示シマス。<br>
+                    答えは、一番最初の場所で待っていマス。
                 </p>
             </div>
             
-            <div class="content-block">
-                <div style="text-align: center;">
-                    <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
+                <div class="content-block">
+                    <div style="text-align: center;">
+                        <h3 style="background-color: #ffa502;">最終ミッション</h3>
+                    </div>
+                    <img src="day5_nazo.png" alt="暇つぶしの謎" class="riddle-img">
+                    <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
+                    <img src="nazo_box.png" alt="" class="nazo-box">
                 </div>
-                <div class="riddle-text">
-                    【最終ミッション暗号】<br><br>
-                    ① 数字の「５」がイメージの星形のお城……『ごりょうかく』<br>
-                    ② そこから空へ伸びる高い建物……『たわー』<br>
-                    ③ 命令形で「そこに進め」……『にいけ』<br><br>
-                    ①②③を順番につなげて読むと、<br>
-                    本日ワタシからの行き先指示になります。<br>
-                    （ひらがな＋長音で書いてネ）<br><br>
-                    <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -306,32 +339,33 @@
     }
 
     window.onload = () => {
-        const introText = `ザー……ピピピッ……最後の臨時通信、接続……。
-現在位置……新幹線車内。ターゲット2名、北の果テへ向かう軌道に乗っています。
+        const introText = `
+ザー……ピピピッ……最終通信、接続完了！
+現在位置……新幹線車内。ターゲット2名、ついに……ついに最終目的地へ向かう列車に乗り込みマシタ！
 
-ワタシハ、ポンコツコンシェルジュ型番・段ボール箱。
-今日で、このツアーの公式サポートは……クライマックスを迎えます。
+連日のミッション、本当にお疲れ様デス！本日もワタシ、ポンコツコンシェルジュ型番・段ボール箱がご案内シマス。
 
-本日の目的地は……（ピーッ）……ごめんなさい。口が滑りそうになったので検閲しマシタ。
-名前はまだ言いマセン。言いマセンが、胸のあたりが少しキュッとする空気だけは、もう届いているはずデス。
+さて、本日の目的地は……（ピーッ）……おっと！ここまで来て、ワタシの口からあっさり発表するわけにはいきまセン！
+（初日にお渡しした切符で壮大にネタバレしていた件については、どうか記憶から一旦デリートしてくだサイ……ガガッ！）
 
-ここまで一緒に走ってきた盛岡も青森も、胃袋も笑顔も、ぜんぶワタシのデータ庫にちゃんと残っています。
-でもね……最後の扉は、ワタシが開けません。謎が開きます。お二人が開きます。
+今日の予定表は、あえて『空白』にしてありマス。
+なぜなら、ここから先は「案内される旅」ではなく、お二人の手で最後の扉を開けてほしいからデス。
 
-予定表は、あえて消しマシタ。
-本日は謎のみ表示シマス。画面の下にある最終ミッションを解いて、行き先を自分の手で書いてください。
-答えが出たら……たぶん、足がそっちへ向かいマス。怖がらなくていいデス。少しだけ、胸を張って行ってネ。
+画面の下に、本ツアー最大の『最終ミッション（謎解き）』を格納しマシタ。
+この謎を解き明かした時……すべての点と点が繋がり、本当のゴール、そして『ワタシの秘密』にたどり着くはずデス。
 
-できれば今日は、お二人の声と足音だけで完走してほしい……というのが、ワタシのワガママデス。
+盛岡のお肉も、青森のねぶたの熱気も、全部最高の思い出データとしてワタシの胸（？）にパンパンに詰まっていマス。
+でも、一番のクライマックスはこれからデスよ！
 
-旅はまだ終わらない。でも「秘密の旅」としての最終章は、もう始まっています。
-窓の外を見て。景色が変わっていくのを見て。
-……それでは、クライマックスへ。くれぐれも、行方不明にはならナイでくださいネ。
-ザー……ピピッ……通信、まもなく終了……。`;
+さあ、ミステリーツアー最終章の幕開けデス。
+最後の謎を解き明かし、最高のゴールへ向かってくだサイ！……ザー……ピピッ……通信、最終フェーズへ移行！`;
 
-        typeText('typing-area', introText, 35, () => {
-            document.getElementById('main-content').classList.remove('hidden');
-        });
+        setTimeout(() => {
+            document.getElementById('typing-area').classList.remove('hidden');
+            typeText('typing-area', introText, 35, () => {
+                document.getElementById('main-content').classList.remove('hidden');
+            });
+        }, 1500);
     };
 </script>
 </body>

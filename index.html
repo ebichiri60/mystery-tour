@@ -248,6 +248,18 @@
             margin-top: 12px;
             text-align: center;
         }
+        .nazo-box {
+            display: block;
+            width: 160px;
+            height: auto;
+            margin: 20px auto 0;
+        }
+        .end-box {
+            display: block;
+            width: 180px;
+            height: auto;
+            margin: 24px auto 0;
+        }
 
         /* たぬきが画面下からひょこひょこ顔出し */
         .tanuki-peek {
@@ -290,6 +302,20 @@
                 transform: translateY(78%);
             }
         }
+        /* システム起動直後の箱キャラ */
+        .hai-box-intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .hai-box-intro img {
+            width: 180px;
+            height: auto;
+            animation: hai-box-pop 0.45s ease-out;
+        }
+        @keyframes hai-box-pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -320,9 +346,12 @@
             <button id="initiate-btn" class="btn btn-pop" disabled>システムを起動する！</button>
         </div>
 
-        <!-- 画面2: メイン画面 (ボタン押下後) -->
+        <!-- 画面2: メイン画面 (ボタン押下後 / キャリーバッグ10回) -->
         <div id="main-screen" class="hidden">
-            <div id="typing-area"></div>
+            <div id="hai-box-intro" class="hai-box-intro hidden">
+                <img src="day1_box.png" alt="段ボール箱">
+            </div>
+            <div id="typing-area" class="hidden"></div>
             
             <div id="main-content" class="hidden">
                 <div class="content-block">
@@ -353,7 +382,7 @@
                         今後のサポートのため、下のボタンから<br>私（ポンコツ）を友達追加してください！
                     </p>
                     <!-- ↓↓ LINEのURLに書き換えてください ↓↓ -->
-                    <a href="https://lin.ee/YOUR_LINK" class="btn btn-pop" style="background-color: #06C755;">LINE登録する！</a>
+                    <a href="https://lin.ee/YkUlaYg" class="btn btn-pop" style="background-color: #06C755;">LINE登録する！</a>
                 </div>
                 
                 <div class="content-block">
@@ -362,6 +391,7 @@
                     </div>
                     <img src="day1_nazo.png" alt="暇つぶしの謎" class="riddle-img">
                     <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
+                    <img src="nazo_box.png" alt="" class="nazo-box">
                 </div>
             </div>
         </div>
@@ -370,6 +400,7 @@
         <div id="ending-screen" class="hidden">
             <img src="quokka.png" alt="クワッカワラビー" class="box-img" style="position: static; margin-bottom: 20px; cursor: default; transform: none; width: 150px;">
             <div id="ending-typing-area"></div>
+            <img src="end_box.png" alt="" id="end-box-image" class="end-box hidden">
         </div>
 
     </div>
@@ -384,8 +415,8 @@
     const BOX_IMAGE_SRC = 'box.png';
     const QUOKKA_IMAGE_SRC = 'quokka.png';
     
-    // 【目標時刻の設定】 2026年7月17日 19時00分00秒
-    const TARGET_DATE = new Date('2026-07-17T19:00:00');
+    // 【目標時刻の設定】 2026年7月17日 18時40分00秒
+    const TARGET_DATE = new Date('2026-07-17T18:40:00');
 
     document.getElementById('box-image').src = BOX_IMAGE_SRC;
     let tapCount = 0;
@@ -455,14 +486,19 @@
         document.getElementById('prep-screen').classList.add('hidden');
         document.getElementById('main-screen').classList.remove('hidden');
         document.querySelector('.tanuki-peek').classList.remove('hidden');
+
+        // まず day1_box.png を表示してから、段ボール箱メッセージを開始
+        const haiIntro = document.getElementById('hai-box-intro');
+        const typingArea = document.getElementById('typing-area');
+        haiIntro.classList.remove('hidden');
         
-        const introText = `ハァハァ………フゥフゥ………間に合った……やべっ…えーコホン！ザー……ピピピッ……システム起動、完了。
+        const introText = `ハァハァ………フゥフゥ………間に合った……やばっ…えーコホンッ！ザー……ピピピッ……システム起動、完了。
 現在位置……草津を出発した新幹線車内。ターゲット2名、無事に指定列車への着席を捕捉しました。
 …………………………
 ​
 ……まずは、突然の怪しい『招待状』であったにも関わらず、お時間通りに列車にご乗車いただき、本当にありがとうございます。そして、この特別なシークレット・ツアーへようこそ！
 ​
-ワタシハ、先ほどお渡しした手紙に記されていた『専属コンシェルジュ』兼『美食データ収集システム』、型番・段ボール箱デス。
+ワタシハ、先ほどお渡しした手紙に記されていた『専属コンシェルジュ』兼『美食データ収集システム』、名前は『クアッ・・・』じゃなくて『段ボール箱』デス。ワタシは高度なAIデス・・・。
 ​
 （少し焦ったような、情けない声で）
 ……ピー、ガガッ。警告、警告。
@@ -471,7 +507,8 @@
 ……ハイ、お察しの通りデス。ワタシとしたことが、お渡しした切符の券面に、最終目的地である『函館』の文字がバッチリ印字されているという痛恨のミスを起こしてしまいました……。
 ミステリーツアーなのに、開始0秒で壮大にネタバレしてしまうという信じられないポンコツぶりですが……。どうか薄目で切符を見て、知らないフリをしてワクワクしてくださると助かりマス……！
 ​
-（コホンと咳払いをして、元の機械的な声に戻る）
+コホンッ！
+
 ……さて、気を取り直して。ワタシとスマートフォンとの同期が完了し、本格的なミッションがスタートしました。
 今回の壮大なる旅の最終目的地は、遥か北の大地、函……（ピーッ）ゲフン。
 そのために、道中さまざまな場所で極上のお酒と美食を堪能していただき、皆様の『美味しい記憶』をワタシのデータ庫へ提供していただきます。
@@ -480,17 +517,20 @@
 本日のミッションは、上野の熱気と冷たいアルコール、そして締めの一杯のデータを極秘裏に収集すること。
 ​
 ですが、まずは肩の力を抜いてください。
-上野に到着するまでは、完全なる自由行動。日常のスイッチをオフにして、さっそく冷たいビールを開けて乾杯するのも大歓迎デス！到着後の居酒屋のデータもバッチリ検索済みですので、これから始まる1ヶ月の長期連休の前夜祭と思って、道中ビールを楽しんだり、会話をお楽しみいただき、心ゆくまでくつろいでくださいね。
+上野に到着するまでは、完全なる自由行動。日常のスイッチをオフにして、さっそく冷たいビールを開けて乾杯するのも大歓迎デス！到着後の居酒屋のデータもバッチリ検索済みですので、これから始まる1ヶ月の長期休暇の前夜祭と思って、道中ビールを楽しんだり、会話をお楽しみいただき、心ゆくまでくつろいでくださいね。
 ​
 画面の下には、移動中の暇つぶし用として、ワタシからの『謎解きプログラム』を格納しておきました。答えは招待状に同封した解答用紙に記入しておいてください。夜にでも確認しますので、忘れないようにお願いします。
-そしてもう一つ。夜の美食データをスムーズに受信するため、画面下にあるボタンから、ワタシの『専用通信回線（LINE）』をシステム登録（友達追加）しておいてください。
+そしてもう一つ。夜の美食データをスムーズに受信するため、画面下にあるボタンから、ワタシの『専用通信回線』をシステム登録しておいてください。
 ​
 すべての行程は、到着するその瞬間まで（行き先以外は）秘密デス。
 それでは、驚きと笑顔に満ちた、素晴らしいツアーの幕開けデス。上野の地でお待ちしております。……ザー……ピピッ……通信、終了。`;
         
-        typeText('typing-area', introText, 35, () => {
-            document.getElementById('main-content').classList.remove('hidden');
-        });
+        setTimeout(() => {
+            typingArea.classList.remove('hidden');
+            typeText('typing-area', introText, 35, () => {
+                document.getElementById('main-content').classList.remove('hidden');
+            });
+        }, 1500);
     }
 
     document.getElementById('initiate-btn').addEventListener('click', startMainScreen);
@@ -503,7 +543,7 @@
         }
     });
 
-    document.getElementById('box-image').addEventListener('click', () => {
+document.getElementById('box-image').addEventListener('click', () => {
         tapCount++;
         if (tapCount >= 5) {
             clearInterval(timerInterval);
@@ -511,10 +551,13 @@
             document.getElementById('ending-screen').classList.remove('hidden');
             document.querySelector('#ending-screen img').src = QUOKKA_IMAGE_SRC;
 
-            const endingText = "パカッ……。\n\n中から、クワッカワラビーが顔を出しました。\n\n…………………………………………\n\n……実はネ。\nワタシがポンコツなコンシェルジュを演じ、謎を仕掛け、行き先を隠し、胃袋を空っぽにさせたりしたのは——全部、「二人きりでしか作れない時間」を届けるためデス。\n\n招待状も、新幹線も、盛岡も青森も、最後の謎も。\n誰かに言われたから動く旅ではなく、「お二人が自分で選んで、歩いて、笑って、少しだけ迷って」いく旅に、したかったンデス。\n\nだから箱を開けるキーは、最後までワタシの手では渡しマセンでした。\nDay5の謎を解き、「ここに戻って、箱を五回押せ」と書いてあるところまでたどり着いた……それが、ワタシからの本当の卒業証書デス。\n\nどうも、ありがとう。\n間に合ってくれて、乗ってくれて、食べてくれて、解けてくれて、最後まで付いてきてくれて——本当に、ありがとう。\nワタシのデータ庫は、もういっぱいでス。……幸せな意味で、です。\n\nここからの時間は、予定表も謎もいりマセン。\n残った日々は、二人だけの地図で歩いてください。\nワタシはもう、後ろから見守るだけデス。\n\n素敵な旅の続きを。\n……いってらっしゃい。\n\nザー……ピピッ……。\nポンコツコンシェルジュ、任務完了。通信、本当に……終了。";
+            const endingText = "パカッ……。\n\nテッテレーーー\n\n…………………………………………\n\nポンコツAIの正体はワタシでした！\n\nって、バレバレだったよね？笑\n\n……実はネ。\nワタシがポンコツなコンシェルジュを演じ、謎を仕掛け、行き先を隠し、胃袋を空っぽにさせたりしたのは——全部、「二人きりでしか作れない時間」を届けるためデス。\n\n毎日頑張ってくれている君たちに、時間を忘れて思いっきり楽しんでほしくて招待状も、新幹線も、盛岡も青森も、最後の謎も企画したんだっ！\n\n……全部、君たちのとびきりの笑顔が見たくて用意したプレゼント。\n\nバレバレの変装だったのに、一緒に全力で楽しんで謎を解いてくれて……本当にありがとう！ボクの胸の中は、二人の楽しそうな思い出でもういっぱいです。\n\nさあ、ボクの『コンシェルジュ』としての案内はここまで。\nここから先は、予定表も案内役もいりません！\n残りの旅は、二人だけで、のんびり自由に楽しんでね。\nワタシはもう、後ろから見守るだけデス。\n\n\n🎁 最後に、ボクから函館のおすすめナビ！ 🎁\n\n【絶品グルメで乾杯！】\n🍺 はこだてビール\n工場直営の地ビールで乾杯！香ばしく焼き上げるジンギスカンと一緒に、極上のお肉と冷たいお酒をプハーッと楽しんでね！\n\n🦑 函館朝市\n早起きして、港の活気の中で食べる新鮮な海鮮丼は別格だよ。\n\n🍔 ラッキーピエロ\n函館のご当地バーガー！名物のチャイニーズチキンバーガーは絶対に食べてほしいな。\n\n【ロマンチックにお散歩】\n🌃 函館山展望台\n王道の100万ドルの夜景！ロープウェイで登って、二人で綺麗な景色を目に焼き付けてね。\n\n⛪️ 元町エリア\nレトロな洋館や教会が並ぶ坂道。海を見下ろしながらのんびりお散歩するのに最高だよ。\n\n\n最高の旅の続きを。\n……いってらっしゃい。\n\nザー……ピピッ……。\nポンコツコンシェルジュ、任務完了。通信、本当に……終了。\n\n\n\n★リアル脱出ゲーム★\n\n★クアッカワラビーからの挑戦状★\n\n★おしまい★";
             
+            // 💡 文章が長くなったので、タイピング速度を 90 から 50 に少し早めました
             setTimeout(() => {
-                typeText('ending-typing-area', endingText, 90);
+                typeText('ending-typing-area', endingText, 50, () => {
+                    document.getElementById('end-box-image').classList.remove('hidden');
+                });
             }, 600);
         }
     });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYSTERY TOUR - DAY 2 盛岡</title>
+    <title>MYSTERY TOUR - DAY 1 盛岡</title>
     <style>
         /* ポップで可愛い背景（水玉模様） */
         body {
@@ -232,6 +232,42 @@
             font-size: 0.95em;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
         }
+        .riddle-img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        .riddle-note {
+            font-size: 0.85em;
+            color: #555;
+            font-weight: bold;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .nazo-box {
+            display: block;
+            width: 160px;
+            height: auto;
+            margin: 20px auto 0;
+        }
+        .day-box-intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .day-box-intro img {
+            width: 180px;
+            height: auto;
+            animation: day-box-pop 0.45s ease-out;
+        }
+        @keyframes day-box-pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -250,12 +286,15 @@
             <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
 
             <div class="text-group">
-                <div class="status-text">DAY 2</div>
+                <div class="status-text">DAY 1</div>
                 <div class="countdown-label-new">盛岡編</div>
             </div>
         </div>
 
-        <div id="typing-area"></div>
+        <div id="day-box-intro" class="day-box-intro">
+            <img src="day2_box.png" alt="段ボール箱">
+        </div>
+        <div id="typing-area" class="hidden"></div>
         
         <div id="main-content" class="hidden">
             <div class="content-block">
@@ -263,17 +302,32 @@
                     <h3>今日の予定</h3>
                 </div>
                 <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
-                    <span style="font-size: 1.2em;">🚄 盛岡到着</span><br>
-                    新幹線で盛岡へ！まずは街の空気を深く吸いこんで、本日のミッションをスタートデス。<br><br>
+                    <span style="font-size: 1.2em;">📍 12:46｜盛岡到着＆身軽にチェンジ！</span><br>
+                    魅惑の美食都市、盛岡に上陸デス！まずは今夜の拠点（<a href="https://morioka.metropolitan.jp/" target="_blank" class="link-spot">メトロポリタン盛岡ニューウィング</a>）に荷物を預けて、身軽な状態にトランスフォームしマス。駅チカの最強拠点デス！<br><br>
 
-                    <span style="font-size: 1.2em;">🗺️ 市内観光</span><br>
-                    盛岡のまちなかを自由にプラプラ。気になるお店や景色を、遠慮なくデータ収集してくださいネ。<br><br>
+                    <span style="font-size: 1.2em;">🚶‍♂️ 13:00〜14:00｜お腹を空かせるための腹ごなし散歩</span><br>
+                    最高のランチを迎えるために、あえて焦らして盛岡の街を少し歩きマス！清らかな中津川のせせらぎを聞きながら歩くもヨシ、「開運橋」から岩手山の絶景を眺めるもヨシ。さあ、胃袋の準備運動デス！<br><br>
 
-                    <span style="font-size: 1.2em;">🍽 極上の食事</span><br>
-                    本日のメインミッションは胃袋フル稼働！盛岡の美味いものを、とことん味わい尽くしてくださイ。<br><br>
+                    <span style="font-size: 1.2em;">🍜 14:00〜15:30｜究極の選択！冷麺＆焼肉ランチ</span><br>
+                    <span style="color: #e15f41;">【A：<a href="https://tabelog.com/iwate/A0301/A030101/3000023/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">ぴょんぴょん舎 盛岡駅前店</a>】</span><br>
+                    王道にして至高！果物の甘みが溶け込んだフルーティーで奥深いスープに、ツルツル・シコシコの手打ち麺が絡む絶品冷麺！焼肉と一緒に頬張れば、お口の中が幸せのテーマパークに大変身デス！<br>
+                    <span style="color: #e15f41;">【B：<a href="https://tabelog.com/iwate/A0301/A030101/3000020/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">盛楼閣（せいろうかく）</a>】</span><br>
+                    地元民からも愛されまくる名店！牛の旨味がガツンと効いた濃厚スープと、噛み応え抜群の太麺がたまりまセン！極上の焼肉の脂を、冷たくてピリ辛な冷麺のスープで流し込む……あぁ、想像しただけでワタシの冷却ファンがフル回転デス！<br><br>
 
-                    <span style="font-size: 1.2em;">🏨 ホテルチェックイン</span><br>
-                    夜はホテルでゆっくり回復モード。明日への体力温存も、立派な作戦デス。
+                    <span style="font-size: 1.2em;">🏨 16:00｜ホテルチェックイン＆作戦会議</span><br>
+                    ふかふかのベッドにダイブしつつ、夕方の過ごし方を選んでくだサイ！<br><br>
+
+                    <span style="font-size: 1.2em;">🌇 夕方の部：どう過ごす？</span><br>
+                    <span style="color: #e15f41;">【A：エモい街並みでお散歩＆写真撮影会📸】</span><br>
+                    まるでタイムスリップ！国の重要文化財「岩手銀行赤レンガ館」など、大正ロマンあふれるノスタルジックな洋館を巡るルート。美しい街並みを背景に、お二人の素敵な笑顔をたくさんカメラに収めてくだサイ！<br>
+                    <span style="color: #e15f41;">【B：ローカルスーパー探検＆カフェでまったり☕️】</span><br>
+                    おしゃれなカフェでコーヒーブレイクした後は、地元のスーパーに潜入！夜のお部屋での宴に向けて、ご当地ならではの見たことないレアな面白おつまみを発掘する宝探しミッションデス！<br><br>
+
+                    <span style="font-size: 1.2em;">🍻 夜の宴｜盛岡の夜に乾杯！</span><br>
+                    <span style="color: #e15f41;">【A：<a href="https://tabelog.com/iwate/A0301/A030101/3012134/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">かっこ 盛岡駅前店</a>】</span><br>
+                    新鮮な海鮮やアツアツの焼き鳥で、冷たいビールをグビッ！活気あふれる空間で、今日一日の楽しかった思い出を語り合いながら、最高の夜を満喫してくだサイ！<br>
+                    <span style="color: #e15f41;">【B：<a href="https://www.hotpepper.jp/strJ004559416/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">岩手郷土酒場 和み屋</a>】</span><br>
+                    これぞディープな岩手！三陸の海の幸や、地元ならではの郷土料理を地酒と一緒にしっぽり味わう大人の時間。岩手ならではの美味データ、ワタシのデータベースにドシドシ送信よろしくお願いしマス！
                 </p>
             </div>
             
@@ -281,16 +335,9 @@
                 <div style="text-align: center;">
                     <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
                 </div>
-                <div class="riddle-text">
-                    【ワタシの東北名物クイズ】<br><br>
-                    ①森のようにしげる語「もり」<br>
-                    ②家のうしろにそびえる語「おか」<br>
-                    ③キンキンに冷えて、すすると幸せな「れいめん」<br><br>
-                    この３つを順番にくっつけると、<br>
-                    あるまちの名物メニューになるヨ。<br>
-                    答えはひらがなでどうぞ！<br><br>
-                    <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
-                </div>
+                <img src="day2_nazo.png" alt="暇つぶしの謎" class="riddle-img">
+                <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
+                <img src="nazo_box.png" alt="" class="nazo-box">
             </div>
         </div>
 
@@ -316,30 +363,34 @@
     }
 
     window.onload = () => {
-        const introText = `ザー……ピピピッ……通信、接続完了。
-現在位置……新幹線車内。ターゲット2名、北への移動を確認……シマシタ！
+        const introText = `
+ザー……ピピピッ……通信、接続完了。
+現在位置……東北新幹線車内。ターゲット2名、順調に北へ向かっているのを捕捉しマシタ！
 
-えーコホン。本日のミッション担当、ポンコツコンシェルジュ型番・段ボール箱デス。
-昨日の上野データ収集、ごくろうさまでした。胃袋センサーの反応がなかなか優秀だったので、本日はさらに負荷をかける予定デス……！
+えーコホンッ。本日のナビゲーションも、ワタシ、ポンコツコンシェルジュ型番・段ボール箱が担当いたしマス。
+昨日の上野での夜の宴と締めの一杯、極上の美食データがワタシの回路にもビリビリ届きマシタよ。最高のスタートが切れましたネ！
 
-本日の目的地は……『盛岡』！
-ワタシの美食データベースが「ここぞ！」と飛び出してきた候補地デス。わんこそば？じゃじゃ麺？……いや、まだまだあるヨ、盛岡美食の森は深いデス。
+さて、本日の目的地は……『盛岡』デス！
+ワタシのデータベースが「ここに行かずして北へは進めない！」と激しくアラートを鳴らした、魅惑の美食都市デス。
 
-で、大事なお願イ。
-今日は美味しいものをいっぱい食べさせるから、胃袋はしっかり空けておくように！
-朝食はチマチマでOK。途中のお菓子も危険デス。ワタシが本気を出す日に、胃が満タンだとトラブル報告が増えるカラ……（経験談）。
+ここで、昨晩の通信の復習デス。
+今日はお昼ご飯の時間がすこーし遅めの予定デス。ワタシのアドバイス通り、朝ごはんや道中のおやつはバッチリ買い込んできましたか？
 
-到着したら、市内観光→極上の食事→ホテルチェックイン、の流れでお届けしマス。
-細かい店名は到着後に受信してもいいデスガ……まずは窓の外の景色でもながめて、ワクワクをチャージしてくださいネ。
+盛岡に到着しましたら、市内をのんびり観光しつつ、極上のお肉と……「ツルッ！シコッ！」とした最高の弾力を持つ『あの名物麺』のコンボをお見舞いする予定デス。
+細かいルートは下の方でご案内しマスので、今は窓の外を流れる景色を眺めながら、ゆっくりとワクワクをチャージしてくだサイ。
 
-画面の下には、移動中の暇つぶし用『謎解きプログラム』を格納済みデス。
-答えは招待状に同封した解答用紙に記入しておいてください。夜にでも確認しマス。
+画面の下には、本日分の『謎解きプログラム』もセット完了していマス。
+答えが分かったら、手紙に同封の解答用紙に記入してくだサイ。
 
-それでは、盛岡美食アタックの幕開けデス。胃袋よ、がんばれ……ザー……ピピッ……通信、継続中。`;
+それでは、Day1・盛岡美食アタックの幕開けデス。
+素晴らしい新幹線の旅を！……ザー……ピピッ……通信、継続中。`;
 
-        typeText('typing-area', introText, 35, () => {
-            document.getElementById('main-content').classList.remove('hidden');
-        });
+        setTimeout(() => {
+            document.getElementById('typing-area').classList.remove('hidden');
+            typeText('typing-area', introText, 35, () => {
+                document.getElementById('main-content').classList.remove('hidden');
+            });
+        }, 1500);
     };
 </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYSTERY TOUR - DAY 3 青森</title>
+    <title>MYSTERY TOUR - DAY 2 青森</title>
     <style>
         /* ポップで可愛い背景（水玉模様） */
         body {
@@ -232,6 +232,42 @@
             font-size: 0.95em;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
         }
+        .riddle-img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        .riddle-note {
+            font-size: 0.85em;
+            color: #555;
+            font-weight: bold;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .nazo-box {
+            display: block;
+            width: 160px;
+            height: auto;
+            margin: 20px auto 0;
+        }
+        .day-box-intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .day-box-intro img {
+            width: 180px;
+            height: auto;
+            animation: day-box-pop 0.45s ease-out;
+        }
+        @keyframes day-box-pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -250,12 +286,15 @@
             <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
 
             <div class="text-group">
-                <div class="status-text">DAY 3</div>
+                <div class="status-text">DAY 2</div>
                 <div class="countdown-label-new">青森編</div>
             </div>
         </div>
 
-        <div id="typing-area"></div>
+        <div id="day-box-intro" class="day-box-intro">
+            <img src="day3_box.png" alt="段ボール箱">
+        </div>
+        <div id="typing-area" class="hidden"></div>
         
         <div id="main-content" class="hidden">
             <div class="content-block">
@@ -263,17 +302,15 @@
                     <h3>今日の予定</h3>
                 </div>
                 <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
-                    <span style="font-size: 1.2em;">🚄 青森到着</span><br>
-                    午後の新幹線で青森へランディング！北の風を感じたら、本日の作戦開始デス。<br><br>
+                    <span style="font-size: 1.2em;">🚄 17:04｜新青森到着＆チェックイン！</span><br>
+                    ついに本州最北端、青森県にランディング！まずは今夜のふかふか拠点（<a href="https://www.hotelaomori.co.jp/" target="_blank" class="link-spot">ホテル青森</a>）に向かってチェックインを済ませまショウ！<br><br>
 
-                    <span style="font-size: 1.2em;">🗺️ 観光</span><br>
-                    気になるスポットを自由に回遊してください。記録係（ワタシ）は後方支援に徹しマス。<br><br>
+                    <span style="font-size: 1.2em;">👕 18:00頃｜HP回復＆お洗濯ミッション</span><br>
+                    長期戦の旅には欠かせない「お洗濯」のターン！ホテルの目の前にあるコインランドリーに衣類をブチ込みつつ、お部屋でゴロゴロして体力を全回復させてくだサイ。明日の着替えをリフレッシュさせたら、いざ夜の街へ！<br><br>
 
-                    <span style="font-size: 1.2em;">🍽 食事</span><br>
-                    青森のご当地グルメを大胆にチェック。昨日に続き、胃袋フルスペック起動を推奨シマス！<br><br>
-
-                    <span style="font-size: 1.2em;">🏨 ホテルチェックイン</span><br>
-                    夜はホテルで英気を養ってネ。明日も旅はまだ続くカラデス。
+                    <span style="font-size: 1.2em;">🍻 夜の宴｜青森の夜祭りとスタミナ全開ディナー！</span><br>
+                    <span style="color: #e15f41;">【<a href="https://s.tabelog.com/aomori/A0201/A020101/2000321/" target="_blank" class="link-spot">ねぶたの国 たか久</a>】</span><br>
+                    ドガーン！とねぶた囃子や津軽三味線の生演奏が響き渡る、毎日がお祭り騒ぎの超エンタメ居酒屋へご案内デス！陸奥湾の新鮮な海の幸はもちろん、鉄板でジュージュー焼けるアツアツの「十和田バラ焼き」も必食！香ばしい『ニンニク』の匂いと熱気で、ワタシの冷却ファンも吹き飛ぶ大興奮間違いナシ！今夜は飲んで、食べて、手拍子して、青森の夜を最高に楽しんでくだサイ！
                 </p>
             </div>
             
@@ -281,15 +318,9 @@
                 <div style="text-align: center;">
                     <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
                 </div>
-                <div class="riddle-text">
-                    【ツーンとくる青森クイズ】<br><br>
-                    「人」と「肉」をくっつけたような名前……<br>
-                    でもお肉ではありマセン。<br><br>
-                    畑では白い玉になり、<br>
-                    切ると鼻のセンサーが警報を鳴らしマス。<br>
-                    青森が誇る、元気の源ソレハなーんだ？<br><br>
-                    <span style="font-size: 0.85em; color: #555;">※答えは朝の手紙の解答用紙に書いてね！</span>
-                </div>
+                <img src="day3_nazo.png" alt="暇つぶしの謎" class="riddle-img">
+                <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
+                <img src="nazo_box.png" alt="" class="nazo-box">
             </div>
         </div>
 
@@ -315,29 +346,29 @@
     }
 
     window.onload = () => {
-        const introText = `ザー……ピピピッ……午後の臨時通信、受信！
-現在位置……またしても新幹線車内。ターゲット2名、北上継続中……ヨシ！
+        const introText = `
 
-本日もワタシ、ポンコツコンシェルジュ型番・段ボール箱が伴走しマス。
-盛岡データ……美味すぎてメモリが少し熱暴走しかけましたが、無事にリカバリ完了デス。お二人の食べっぷり、ブラボーデスネ。
+ザー……ピピピッ……午後の臨時通信、受信！
+午前中の『小岩井農場』の大自然データ、しっかりワタシのメモリにも刻まれマシタ！
+そして現在位置……またしても新幹線車内。ターゲット2名、さらなる北の大地へ向けて移動中……ヨシ！
 
-で、本日の目的地を発表……『青森』デス！
-海の幸？畑の恵ミ？……いや、ワタシのデータベースはどっちもフルチャージでお待ちしておりマス。
+本日もワタシ、ポンコツコンシェルジュ型番・段ボール箱がご案内いたしマス。
 
-そして昨日とおなじ、超・重要警報。
-今日も美味しいものをどんどん食べさせる予定なので、胃袋は空けておくように！
-新幹線の中で駅弁を完食すると、到着後に「もう入らない……」というエラーが発生しやすいデス（ワタシの解析結果）。軽めにとどめて、本番に備えてくださイ。
+さて、いよいよ本州最北端！本日の目的地は……『青森』デス！
+海の幸？山の幸？……ワタシの美食データベースが「両方食らい尽くせ！」と荒ぶっておりマス。
 
-本日の流れは、青森到着→観光→食事→ホテルチェックイン、デス。
-細かいルートは気分と天気とお腹の空き具合で調整してOK。ワタシは後方から見守るスタイルでいきマス。
+本日は夕方到着となるため、観光は控えめに『暮らしのミッション（お洗濯）』をこなしつつ、夜の極上ディナーに全集中する作戦デス。
+今夜はスタミナ満点、ガツン！とくるご当地グルメを予定していますので、長旅の疲れを完全に吹き飛ばす準備をしておいてくだサイ！
 
-暇つぶしの謎解きも下に格納済み。解答用紙への記入、お忘れなく！
+暇つぶしの謎解きも下に格納済みデス。解答用紙への記入、お忘れなく！
+それでは青森パート、スタート！窓の外の景色をながめつつ、胃袋の最終調整を……ザー……ピピッ……通信、継続中。`;
 
-それでは青森パート、スタート！窓の外をながめつつ、胃袋スタンバイ……ザー……ピピッ……通信、継続中。`;
-
-        typeText('typing-area', introText, 35, () => {
-            document.getElementById('main-content').classList.remove('hidden');
-        });
+        setTimeout(() => {
+            document.getElementById('typing-area').classList.remove('hidden');
+            typeText('typing-area', introText, 35, () => {
+                document.getElementById('main-content').classList.remove('hidden');
+            });
+        }, 1500);
     };
 </script>
 </body>
