@@ -260,6 +260,9 @@
             height: auto;
             margin: 24px auto 0;
         }
+        .end-box.hidden {
+            display: none;
+        }
 
         /* たぬきが画面下からひょこひょこ顔出し */
         .tanuki-peek {
@@ -550,6 +553,8 @@ document.getElementById('box-image').addEventListener('click', () => {
             document.getElementById('prep-screen').classList.add('hidden');
             document.getElementById('ending-screen').classList.remove('hidden');
             document.querySelector('#ending-screen img').src = QUOKKA_IMAGE_SRC;
+            document.getElementById('end-box-image').classList.add('hidden');
+            document.getElementById('ending-typing-area').innerHTML = '';
 
             const endingText = "パカッ……。\n\nテッテレーーー\n\n…………………………………………\n\nポンコツAIの正体はワタシでした！\n\nって、バレバレだったよね？笑\n\n……実はネ。\nワタシがポンコツなコンシェルジュを演じ、謎を仕掛け、行き先を隠し、胃袋を空っぽにさせたりしたのは——全部、「二人きりでしか作れない時間」を届けるためデス。\n\n毎日頑張ってくれている君たちに、時間を忘れて思いっきり楽しんでほしくて招待状も、新幹線も、盛岡も青森も、最後の謎も企画したんだっ！\n\n……全部、君たちのとびきりの笑顔が見たくて用意したプレゼント。\n\nバレバレの変装だったのに、一緒に全力で楽しんで謎を解いてくれて……本当にありがとう！ボクの胸の中は、二人の楽しそうな思い出でもういっぱいです。\n\nさあ、ボクの『コンシェルジュ』としての案内はここまで。\nここから先は、予定表も案内役もいりません！\n残りの旅は、二人だけで、のんびり自由に楽しんでね。\nワタシはもう、後ろから見守るだけデス。\n\n\n🎁 最後に、ボクから函館のおすすめナビ！ 🎁\n\n【絶品グルメで乾杯！】\n🍺 はこだてビール\n工場直営の地ビールで乾杯！香ばしく焼き上げるジンギスカンと一緒に、極上のお肉と冷たいお酒をプハーッと楽しんでね！\n\n🦑 函館朝市\n早起きして、港の活気の中で食べる新鮮な海鮮丼は別格だよ。\n\n🍔 ラッキーピエロ\n函館のご当地バーガー！名物のチャイニーズチキンバーガーは絶対に食べてほしいな。\n\n【ロマンチックにお散歩】\n🌃 函館山展望台\n王道の100万ドルの夜景！ロープウェイで登って、二人で綺麗な景色を目に焼き付けてね。\n\n⛪️ 元町エリア\nレトロな洋館や教会が並ぶ坂道。海を見下ろしながらのんびりお散歩するのに最高だよ。\n\n\n最高の旅の続きを。\n……いってらっしゃい。\n\nザー……ピピッ……。\nポンコツコンシェルジュ、任務完了。通信、本当に……終了。\n\n\n\n★リアル脱出ゲーム★\n\n★クアッカワラビーからの挑戦状★\n\n★おしまい★";
             
