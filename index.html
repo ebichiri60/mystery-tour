@@ -548,7 +548,7 @@
 
 document.getElementById('box-image').addEventListener('click', () => {
         tapCount++;
-        if (tapCount >= 5) {
+        if (tapCount >= 20) {
             clearInterval(timerInterval);
             document.getElementById('prep-screen').classList.add('hidden');
             document.getElementById('ending-screen').classList.remove('hidden');
