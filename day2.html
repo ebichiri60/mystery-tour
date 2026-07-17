@@ -157,7 +157,7 @@
             border: 2px solid #333;
         }
         
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         
         .content-block {
             border-top: 3px dashed #dfe4ea;
@@ -285,66 +285,116 @@
             <img src="carrybag.png" alt="キャリーバッグ" class="scatter-item item-bag">
             <img src="ticket.png" alt="チケット" class="scatter-item item-ticket">
 
-            <div class="text-group">
+            <!-- 準備中用エリア -->
+            <div id="preparation-area" class="text-group hidden">
+                <div class="status-text">準備中<span class="dot-anim" id="prep-dots">...</span></div>
+                <div class="countdown-label-new">新幹線発車まで</div>
+                <div id="countdown-timer">00:00:00</div>
+            </div>
+
+            <!-- 開放後用エリア -->
+            <div id="opened-area" class="text-group hidden">
                 <div class="status-text">DAY 1</div>
                 <div class="countdown-label-new">盛岡編</div>
             </div>
         </div>
 
-        <div id="day-box-intro" class="day-box-intro">
-            <img src="day2_box.png" alt="段ボール箱">
-        </div>
-        <div id="typing-area" class="hidden"></div>
-        
-        <div id="main-content" class="hidden">
-            <div class="content-block">
-                <div style="text-align: center;">
-                    <h3>今日の予定</h3>
-                </div>
-                <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
-                    <span style="font-size: 1.2em;">📍 12:46｜盛岡到着＆身軽にチェンジ！</span><br>
-                    魅惑の美食都市、盛岡に上陸デス！まずは今夜の拠点（<a href="https://morioka.metropolitan.jp/" target="_blank" class="link-spot">メトロポリタン盛岡ニューウィング</a>）に荷物を預けて、身軽な状態にトランスフォームしマス。駅チカの最強拠点デス！<br><br>
-
-                    <span style="font-size: 1.2em;">🚶‍♂️ 13:00〜14:00｜お腹を空かせるための腹ごなし散歩</span><br>
-                    最高のランチを迎えるために、あえて焦らして盛岡の街を少し歩きマス！清らかな中津川のせせらぎを聞きながら歩くもヨシ、「開運橋」から岩手山の絶景を眺めるもヨシ。さあ、胃袋の準備運動デス！<br><br>
-
-                    <span style="font-size: 1.2em;">🍜 14:00〜15:30｜究極の選択！冷麺＆焼肉ランチ</span><br>
-                    <span style="color: #e15f41;">【A：<a href="https://tabelog.com/iwate/A0301/A030101/3000023/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">ぴょんぴょん舎 盛岡駅前店</a>】</span><br>
-                    王道にして至高！果物の甘みが溶け込んだフルーティーで奥深いスープに、ツルツル・シコシコの手打ち麺が絡む絶品冷麺！焼肉と一緒に頬張れば、お口の中が幸せのテーマパークに大変身デス！<br>
-                    <span style="color: #e15f41;">【B：<a href="https://tabelog.com/iwate/A0301/A030101/3000020/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">盛楼閣（せいろうかく）</a>】</span><br>
-                    地元民からも愛されまくる名店！牛の旨味がガツンと効いた濃厚スープと、噛み応え抜群の太麺がたまりまセン！極上の焼肉の脂を、冷たくてピリ辛な冷麺のスープで流し込む……あぁ、想像しただけでワタシの冷却ファンがフル回転デス！<br><br>
-
-                    <span style="font-size: 1.2em;">🏨 16:00｜ホテルチェックイン＆作戦会議</span><br>
-                    ふかふかのベッドにダイブしつつ、夕方の過ごし方を選んでくだサイ！<br><br>
-
-                    <span style="font-size: 1.2em;">🌇 夕方の部：どう過ごす？</span><br>
-                    <span style="color: #e15f41;">【A：エモい街並みでお散歩＆写真撮影会📸】</span><br>
-                    まるでタイムスリップ！国の重要文化財「岩手銀行赤レンガ館」など、大正ロマンあふれるノスタルジックな洋館を巡るルート。美しい街並みを背景に、お二人の素敵な笑顔をたくさんカメラに収めてくだサイ！<br>
-                    <span style="color: #e15f41;">【B：ローカルスーパー探検＆カフェでまったり☕️】</span><br>
-                    おしゃれなカフェでコーヒーブレイクした後は、地元のスーパーに潜入！夜のお部屋での宴に向けて、ご当地ならではの見たことないレアな面白おつまみを発掘する宝探しミッションデス！<br><br>
-
-                    <span style="font-size: 1.2em;">🍻 夜の宴｜盛岡の夜に乾杯！</span><br>
-                    <span style="color: #e15f41;">【A：<a href="https://tabelog.com/iwate/A0301/A030101/3012134/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">かっこ 盛岡駅前店</a>】</span><br>
-                    新鮮な海鮮やアツアツの焼き鳥で、冷たいビールをグビッ！活気あふれる空間で、今日一日の楽しかった思い出を語り合いながら、最高の夜を満喫してくだサイ！<br>
-                    <span style="color: #e15f41;">【B：<a href="https://www.hotpepper.jp/strJ004559416/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">岩手郷土酒場 和み屋</a>】</span><br>
-                    これぞディープな岩手！三陸の海の幸や、地元ならではの郷土料理を地酒と一緒にしっぽり味わう大人の時間。岩手ならではの美味データ、ワタシのデータベースにドシドシ送信よろしくお願いしマス！
-                </p>
+        <!-- ストーリーコンテンツ全体（準備中は非表示） -->
+        <div id="story-container" class="hidden">
+            <div id="day-box-intro" class="day-box-intro">
+                <img src="day2_box.png" alt="段ボール箱">
             </div>
+            <div id="typing-area" class="hidden"></div>
             
-            <div class="content-block">
-                <div style="text-align: center;">
-                    <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
+            <div id="main-content" class="hidden">
+                <div class="content-block">
+                    <div style="text-align: center;">
+                        <h3>今日の予定</h3>
+                    </div>
+                    <p style="font-weight: bold; font-size: 1.05em; line-height: 1.8; color: #333;">
+                        <span style="font-size: 1.2em;">📍 12:46｜盛岡到着＆身軽にチェンジ！</span><br>
+                        魅惑の美食都市、盛岡に上陸デス！まずは今夜の拠点（<a href="https://morioka.metropolitan.jp/" target="_blank" class="link-spot">メトロポリタン盛岡ニューウィング</a>）に荷物を預けて、身軽な状態にトランスフォームしマス。駅チカの最強拠点デス！<br><br>
+
+                        <span style="font-size: 1.2em;">🚶‍♂️ 13:00〜14:00｜お腹を空かせるための腹ごなし散歩</span><br>
+                        最高のランチを迎えるために、あえて焦らして盛岡の街を少し歩きマス！清らかな中津川のせせらぎを聞きながら歩くもヨシ、「開運橋」から岩手山の絶景を眺めるもヨシ。さあ、胃袋の準備運動デス！<br><br>
+
+                        <span style="font-size: 1.2em;">🍜 14:00〜15:30｜究極の選択！冷麺＆焼肉ランチ</span><br>
+                        <span style="color: #e15f41;">【A：<a href="https://tabelog.com/iwate/A0301/A030101/3000023/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">ぴょんぴょん舎 盛岡駅前店</a>】</span><br>
+                        王道にして至高！果物の甘みが溶け込んだフルーティーで奥深いスープに、ツルツル・シコシコの手打ち麺が絡む絶品冷麺！焼肉と一緒に頬張れば、お口の中が幸せのテーマパークに大変身デス！<br>
+                        <span style="color: #e15f41;">【B：<a href="https://tabelog.com/iwate/A0301/A030101/3000020/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">盛楼閣（せいろうかく）</a>】</span><br>
+                        地元民からも愛されまくる名店！牛の旨味がガツンと効いた濃厚スープと、噛み応え抜群の太麺がたまりまセン！極上の焼肉の脂を、冷たくてピリ辛な冷麺のスープで流し込む……あぁ、想像しただけでワタシの冷却ファンがフル回転デス！<br><br>
+
+                        <span style="font-size: 1.2em;">🏨 16:00｜ホテルチェックイン＆作戦会議</span><br>
+                        ふかふかのベッドにダイブしつつ、夕方の過ごし方を選んでくだサイ！<br><br>
+
+                        <span style="font-size: 1.2em;">🌇 夕方の部：どう過ごす？</span><br>
+                        <span style="color: #e15f41;">【A：エモい街並みでお散歩＆写真撮影会📸】</span><br>
+                        まるでタイムスリップ！国の重要文化財「岩手銀行赤レンガ館」など、大正ロマンあふれるノスタルジックな洋館を巡るルート。美しい街並みを背景に、お二人の素敵な笑顔をたくさんカメラに収めてくだサイ！<br>
+                        <span style="color: #e15f41;">【B：ローカルスーパー探検＆カフェでまったり☕️】</span><br>
+                        おしゃれなカフェでコーヒーブレイクした後は、地元のスーパーに潜入！夜のお部屋での宴に向けて、ご当地ならではの見たことないレアな面白おつまみを発掘する宝探しミッションデス！<br><br>
+
+                        <span style="font-size: 1.2em;">🍻 夜の宴｜盛岡の夜に乾杯！</span><br>
+                        <span style="color: #e15f41;">【A：<a href="https://tabelog.com/iwate/A0301/A030101/3012134/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">かっこ 盛岡駅前店</a>】</span><br>
+                        新鮮な海鮮やアツアツの焼き鳥で、冷たいビールをグビッ！活気あふれる空間で、今日一日の楽しかった思い出を語り合いながら、最高の夜を満喫してくだサイ！<br>
+                        <span style="color: #e15f41;">【B：<a href="https://www.hotpepper.jp/strJ004559416/?msockid=35315bf9585969b529e64cae593b68fb" target="_blank" class="link-spot">岩手郷土酒場 和み屋</a>】</span><br>
+                        これぞディープな岩手！三陸の海の幸や、地元ならではの郷土料理を地酒と一緒にしっぽり味わう大人の時間。岩手ならではの美味データ、ワタシのデータベースにドシドシ送信よろしくお願いしマス！
+                    </p>
                 </div>
-                <img src="day2_nazo.png" alt="暇つぶしの謎" class="riddle-img">
-                <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
-                <img src="nazo_box.png" alt="" class="nazo-box">
+                
+                <div class="content-block">
+                    <div style="text-align: center;">
+                        <h3 style="background-color: #ffa502;">暇つぶしの謎</h3>
+                    </div>
+                    <img src="day2_nazo.png" alt="暇つぶしの謎" class="riddle-img">
+                    <p class="riddle-note">※答えは朝の手紙の解答用紙に書いてね！</p>
+                    <img src="nazo_box.png" alt="" class="nazo-box">
+                </div>
             </div>
         </div>
-
     </div>
 </div>
 
 <script>
+    // 目標時刻の設定 (2026年7月18日 10時32分00秒)
+    const targetDate = new Date('2026-07-18T10:32:00+09:00').getTime();
+
+    // 「準備中」の「…」アニメーション用
+    let dotCount = 0;
+    const dotInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        const prepDots = document.getElementById('prep-dots');
+        if(prepDots) prepDots.innerText = '.'.repeat(dotCount);
+    }, 500);
+
+    // カウントダウンと状態の更新処理
+    function checkAndStart() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance <= 0) {
+            // 時間になったらカウントダウンを消し、本編を表示してアニメーション開始
+            clearInterval(dotInterval);
+            document.getElementById('preparation-area').classList.add('hidden');
+            document.getElementById('opened-area').classList.remove('hidden');
+            document.getElementById('story-container').classList.remove('hidden');
+            startTourStory();
+            return true; 
+        } else {
+            // 時間前ならカウントダウンを計算して表示
+            document.getElementById('preparation-area').classList.remove('hidden');
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-timer').innerText = 
+                String(h).padStart(2, '0') + ':' + 
+                String(m).padStart(2, '0') + ':' + 
+                String(s).padStart(2, '0');
+            return false;
+        }
+    }
+
+    // タイピングアニメーション関数
     function typeText(elementId, text, speed, callback) {
         const el = document.getElementById(elementId);
         el.innerHTML = '';
@@ -362,7 +412,8 @@
         type();
     }
 
-    window.onload = () => {
+    // 本編スタート時の処理
+    function startTourStory() {
         const introText = `
 ザー……ピピピッ……通信、接続完了。
 現在位置……東北新幹線車内。ターゲット2名、順調に北へ向かっているのを捕捉しマシタ！
@@ -391,6 +442,21 @@
                 document.getElementById('main-content').classList.remove('hidden');
             });
         }, 1500);
+    }
+
+    // 読み込み時の初期化
+    window.onload = () => {
+        // 最初のチェック
+        const isTimeUp = checkAndStart();
+        
+        // まだ時間になっていなければ、1秒ごとにチェックし続ける
+        if (!isTimeUp) {
+            const timerInterval = setInterval(() => {
+                if (checkAndStart()) {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+        }
     };
 </script>
 </body>
