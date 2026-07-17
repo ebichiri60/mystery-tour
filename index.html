@@ -541,14 +541,14 @@
     // デバッグ用: キャリーバッグを10回タップでメイン画面へ
     document.getElementById('carrybag-image').addEventListener('click', () => {
         bagTapCount++;
-        if (bagTapCount >= 10) {
+        if (bagTapCount >= 100) {
             startMainScreen();
         }
     });
 
 document.getElementById('box-image').addEventListener('click', () => {
         tapCount++;
-        if (tapCount >= 20) {
+        if (tapCount >= 200) {
             clearInterval(timerInterval);
             document.getElementById('prep-screen').classList.add('hidden');
             document.getElementById('ending-screen').classList.remove('hidden');
